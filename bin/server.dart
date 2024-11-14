@@ -18,11 +18,10 @@ Response _echoHandler(Request request) {
 }
 
 void main(List<String> args) async {
-
   final handler =
       Pipeline().addMiddleware(logRequests()).addHandler(_router.call);
-
-  final port = int.parse(Platform.environment['PORT'] ?? '7899');
-  final server = await serve(handler, 'localhost', port);
+  final ip = InternetAddress.anyIPv4;
+  final port = int.parse(Platform.environment['PORT'] ?? '8080');
+  final server = await serve(handler, ip, port);
   print('Server listening on port ${server.port}');
 }
