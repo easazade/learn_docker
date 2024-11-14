@@ -1,4 +1,17 @@
 ###################################################################################################
+Differences between ENTRYPOINT and CMD are that:
+with ENTRYPOINT we set the default command or app that needs to run and that should not be changed
+EVEN though the CMD can do the same but CMD can be overridden.
+
+SO a typical use case could be like below:
+
+```docker
+ENTRYPOINT ["dart", "bin/main.dart"]
+CMD ["--no-debug-logs", "-p", "8080"]
+```
+
+where cmd is used for arguments and it can be overridden, when running docker image.
+`docker run <image-name> --verbose -p 8090`
 ###################################################################################################
 To remove a container run `docker rm <container-id>`
 ###################################################################################################
@@ -21,7 +34,7 @@ If you run the docker image and the server/app not working correctly. you should
 4- try to check for connectivity from inside the docker container by running 
 `docker run -it --rm -p 7899:7899 dart-server /bin/sh`
 5- Another things that helps for testing is overriding CMD instruction when running a docker image in a way that helps us debugging
-eg: `docker run <image-name>` <any-command> like docker run dart-server echo "MEOW"
+eg: `docker run <image-name> <any-command>` like docker run dart-server echo "MEOW"
 or we can pass additional args to CMD command 
 eg: `docker run dart-server:v1 --verbose` in this example the `--verbose` will be added as extra argument to CMD instruction defined.
 NOTE: that we cannot do any of this for a container. only for images.
@@ -118,7 +131,7 @@ RUN: Executes commands in a new layer on top of the current image. Commonly used
 CMD: Specifies the default command to run when the container starts. Can be overridden by passing a command when running the container.
 ENTRYPOINT: Sets the executable that will run in the container. It works similarly to CMD but is not overridden as easily. Often used with CMD for flexibility.
 ENV: Sets environment variables in the container. Useful for configuration values that may be needed at runtime.
-EXPOSE: Declares the port(s) on which the container will listen for connections. This is more of a documentation hint than a rule, as it doesn’t actually expose the port to the host.
+EXPOSE: Declares the port(s) on which the container will listen for connections. This is more of a documentation hint than a rule, as it doesn't actually expose the port to the host.
 ADD: Copies files/directories from the host, similar to COPY, but also has additional features (like unpacking local .tar files). However, COPY is preferred for clarity.
 VOLUME: Creates a mount point with a specified path in the container and marks it as holding externally mounted volumes or persistent data.
 USER: Sets the user for subsequent instructions and for running the container. This can enhance security by not running containers as root.
