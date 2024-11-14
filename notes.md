@@ -1,4 +1,42 @@
 ###################################################################################################
+An interesting docker instruction is HEALTHCHECK, which does what it says
+
+here is how we can define a health check for a server for example 
+
+```docker
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 --start-period=30 CMD wget --spider --quiet http://localhost:8080 || exit 1
+```
+Alternatively can use curl. but it is not installed by default on linux distributions.
+NOTE: that if the base image is set from scratch there is no wget command either. but after the build stage 
+we can use an alpine distro for runtime stage
+
+something like this:
+
+
+```docker
+FROM dart:stable AS build
+
+WORKDIR /app
+COPY pubspec.* ./
+RUN dart pub get
+
+COPY . .
+RUN dart compile exe bin/server.dart -o bin/server
+
+FROM alpine:latest
+RUN apk add --no-cache wget
+
+COPY --from=build /runtime/ /
+COPY --from=build /app/bin/server /app/bin/
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
+  CMD wget --spider --quiet http://localhost:8080 || exit 1
+
+CMD ["/app/bin/server"]
+```
+###################################################################################################
 the `ENV` instruction allows us to define environment variables inside the container.
 if our app is using environment variables, then when we put the app inside the container we need to have 
 those variables defined inside the container environment. and that can be done using ENV
