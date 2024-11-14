@@ -1,4 +1,16 @@
 ###################################################################################################
+the `ENV` instruction allows us to define environment variables inside the container.
+if our app is using environment variables, then when we put the app inside the container we need to have 
+those variables defined inside the container environment. and that can be done using ENV
+
+```docker
+ENV PORT=8080
+ENV MEOW_API_KEY="your-meow-api-key"
+```
+
+alternatively environment variable can be overridden when running an image:
+`docker run -e PORT=9090 -e MEOW_API_KEY="new-key" <image-name>`
+###################################################################################################
 Differences between ENTRYPOINT and CMD are that:
 with ENTRYPOINT we set the default command or app that needs to run and that should not be changed
 EVEN though the CMD can do the same but CMD can be overridden.
