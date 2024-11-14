@@ -129,6 +129,7 @@ LABEL: Adds metadata to an image, like versioning or author details. Often used 
 HEALTHCHECK: Tests if the container is still functioning as expected. It can define a command to check the health of the container, retry intervals, and other parameters.
 SHELL: Specifies the shell to use for RUN commands on Windows (e.g., cmd or powershell). On Linux, it can override the default /bin/sh.
 ###################################################################################################
+```docker
 # Use the Dart SDK for Windows as the build stage
 FROM google/dart AS build
 
@@ -149,3 +150,4 @@ COPY --from=build /app/bin/server.exe .
 # Start server.
 EXPOSE 8080
 CMD ["C:\\app\\bin\\server.exe"]
+```
