@@ -120,7 +120,7 @@ WORKDIR app/
 CMD node app.js
 ```
 ###################################################################################################
-To build an image from a Dockerfile run `docker build -t your-tag`
+To build an image from a Dockerfile run `docker build -t imagename:yourtag path/to/Dockerfile`
 The -t is used to identify the image by name and also add tag to it
 Remember that by default docker adds a tag `latest` on the image
 each created image also has an `IMAGE ID`
