@@ -1,4 +1,15 @@
 ###################################################################################################
+Docker images are like Play Station Disks and containers are like installed games.
+The installed game will have the progress loots and everything we do saved inside it NOT the disk and disk can be used to create many installations each of them will have different progresses.  
+###################################################################################################
+Always Ensure the Dart Server is Listening on 0.0.0.0
+In Docker, by default, the containerized application should listen on all network interfaces (0.0.0.0) 
+to be accessible from outside the container. If the Dart server is only listening on 
+localhost (127.0.0.1), Docker won't expose it.
+
+Check your Dart server code (e.g., server.dart) and look for where it binds to an address.
+It should bind to 0.0.0.0 instead of 127.0.0.1.
+###################################################################################################
 An interesting docker instruction is HEALTHCHECK, which does what it says
 
 here is how we can define a health check for a server for example 
@@ -89,15 +100,7 @@ or we can pass additional args to CMD command
 eg: `docker run dart-server:v1 --verbose` in this example the `--verbose` will be added as extra argument to CMD instruction defined.
 NOTE: that we cannot do any of this for a container. only for images.
 ###################################################################################################
-Always Ensure the Dart Server is Listening on 0.0.0.0
-In Docker, by default, the containerized application should listen on all network interfaces (0.0.0.0) 
-to be accessible from outside the container. If the Dart server is only listening on 
-localhost (127.0.0.1), Docker won't expose it.
-
-Check your Dart server code (e.g., server.dart) and look for where it binds to an address.
-It should bind to 0.0.0.0 instead of 127.0.0.1.
-###################################################################################################
-docker has an interactive mode where for example you can run an ubuntu image and the execute 
+docker has an interactive mode where for example you can run an ubuntu image and then execute 
 shell scripts on it from terminal. eg: 
 docker run -it ubuntu
 
