@@ -1,6 +1,11 @@
 ###################################################################################################
 Docker images are like Play Station Disks and containers are like installed games.
 The installed game will have the progress loots and everything we do saved inside it NOT the disk and disk can be used to create many installations each of them will have different progresses.  
+
+Step 1: Build the image using `docker build` command (build the game)
+Step 2: Run the image to create a container of it using `docker run` command (install the game)
+Step 3: Now that a container is built. It can be started or stopped (start/stop game)
+
 ###################################################################################################
 Always Ensure the Dart Server is Listening on 0.0.0.0
 In Docker, by default, the containerized application should listen on all network interfaces (0.0.0.0) 
@@ -123,10 +128,21 @@ WORKDIR app/
 CMD node app.js
 ```
 ###################################################################################################
-To build an image from a Dockerfile run `docker build -t imagename:yourtag path/to/Dockerfile`
+BUILDING:
+
+To build an image from a Dockerfile run : `docker build -t imagename:yourtag path/to/Dockerfile`
 The -t is used to identify the image by name and also add tag to it
 Remember that by default docker adds a tag `latest` on the image
 each created image also has an `IMAGE ID`
+
+To pass a value as argument to ARG instruction defined in Dockerfile when building image:
+`docker build --build-arg MY_VAR=custom_value -t my_image .` 
+`docker build --build-arg APP_NAME=my_custom_app --build-arg APP_VERSION=2.3.1 -t my_image .`
+
+Sometimes ARGs passed are set on environment variables using ENV command. If ever want to check whether the environment variables
+are set correctly we can run the image with --rm option 
+`docker run --rm my_image`
+
 ###################################################################################################
 To see all built docker images run
 docker images
